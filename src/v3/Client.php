@@ -164,7 +164,7 @@ class Client implements HttpContract
     public function getEventsSearchResults($parameters = [])
     {
         $csvParams = ['categories', 'excluded_events'];
-        $path = $this->appendParametersToUrl('/v3/events/', $parameters, $csvParams);
+        $path = $this->appendParametersToUrl('/v3/events', $parameters, $csvParams);
         $request = $this->getRequest('GET', $path, $this->getDefaultHeaders());
 
         return $this->processRequest($request);
@@ -181,7 +181,7 @@ class Client implements HttpContract
      */
     public function getFeaturedEvents($parameters = [])
     {
-        $path = $this->appendParametersToUrl('/v3/events/featured/', $parameters);
+        $path = $this->appendParametersToUrl('/v3/events/featured', $parameters);
         $request = $this->getRequest('GET', $path, $this->getDefaultHeaders());
 
         return $this->processRequest($request);
