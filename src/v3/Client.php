@@ -135,6 +135,24 @@ class Client implements HttpContract
     }
 
     /**
+     * Seaarch events from Yelp Fusion API based on parameters
+     *
+     * @param    array     $parameters
+     *
+     * @return   stdClass
+     * @throws   Stevenmaguire\Yelp\Exception\HttpException
+     * @link     https://www.yelp.com/developers/documentation/v3/event_search
+     */
+    public function eventSearch($parameters = [])
+    {
+        $csvParams = ['categories', 'excluded_events'];
+        $path = $this->appendParametersToUrl('/v3/events/', $parameters, $csvParams);
+        $request = $this->getRequest('GET', $path, $this->getDefaultHeaders());
+
+        return $this->processRequest($request);
+    }
+
+    /**
      * Fetches results from the Business Search API.
      *
      * @param    array    $parameters
