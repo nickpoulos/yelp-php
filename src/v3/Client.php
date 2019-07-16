@@ -135,7 +135,25 @@ class Client implements HttpContract
     }
 
     /**
-     * Seaarch events from Yelp Fusion API based on parameters
+     * Fetches a specific event by id.
+     *
+     * @param    string    $eventId
+     * @param    array     $parameters
+     *
+     * @return   stdClass
+     * @throws   Stevenmaguire\Yelp\Exception\HttpException
+     * @link     https://www.yelp.com/developers/documentation/v3/event
+     */
+    public function getEvent($eventId, $parameters = [])
+    {
+        $path = $this->appendParametersToUrl('/v3/events/'.$eventId, $parameters);
+        $request = $this->getRequest('GET', $path, $this->getDefaultHeaders());
+
+        return $this->processRequest($request);
+    }
+
+    /**
+     * Search events from Yelp Fusion API based on parameters
      *
      * @param    array     $parameters
      *
@@ -143,10 +161,27 @@ class Client implements HttpContract
      * @throws   Stevenmaguire\Yelp\Exception\HttpException
      * @link     https://www.yelp.com/developers/documentation/v3/event_search
      */
-    public function eventSearch($parameters = [])
+    public function getEventsSearchResults($parameters = [])
     {
         $csvParams = ['categories', 'excluded_events'];
         $path = $this->appendParametersToUrl('/v3/events/', $parameters, $csvParams);
+        $request = $this->getRequest('GET', $path, $this->getDefaultHeaders());
+
+        return $this->processRequest($request);
+    }
+
+    /**
+     * Get featured events from Yelp Fusion API based on location
+     *
+     * @param    array     $parameters
+     *
+     * @return   stdClass
+     * @throws   Stevenmaguire\Yelp\Exception\HttpException
+     * @link     https://www.yelp.com/developers/documentation/v3/featured_event
+     */
+    public function getFeaturedEvents($parameters = [])
+    {
+        $path = $this->appendParametersToUrl('/v3/events/featured/', $parameters);
         $request = $this->getRequest('GET', $path, $this->getDefaultHeaders());
 
         return $this->processRequest($request);
